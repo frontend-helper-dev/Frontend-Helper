@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="uk" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Frontend Helper — Вхід</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="auth.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+</head>
+<body class="auth-body">
+
+  <div class="auth-bg">
+    <div class="auth-bg__blob auth-bg__blob--1"></div>
+    <div class="auth-bg__blob auth-bg__blob--2"></div>
+    <div class="auth-bg__blob auth-bg__blob--3"></div>
+  </div>
+
+  <div class="auth-wrap">
+
+    <!-- LOGO -->
+    <a href="auth.html" class="auth-logo">
+      <span class="auth-logo__icon">&#60;/&#62;</span>
+      <span class="auth-logo__text">Frontend <span class="gradient-text">Helper</span></span>
+    </a>
+
+    <!-- CARD -->
+    <div class="auth-card" id="authCard">
+
+      <!-- TABS -->
+      <div class="auth-tabs">
+        <button class="auth-tab auth-tab--active" id="tabLogin" onclick="switchTab('login')">Вхід</button>
+        <button class="auth-tab" id="tabRegister" onclick="switchTab('register')">Реєстрація</button>
+      </div>
+
+      <!-- ALERT -->
+      <div class="auth-alert" id="authAlert" style="display:none"></div>
+
+      <!-- LOGIN FORM -->
+      <form class="auth-form" id="loginForm" onsubmit="handleLogin(event)">
+        <div class="auth-field">
+          <label class="auth-label">Email</label>
+          <div class="auth-input-wrap">
+            <span class="auth-input-icon">📧</span>
+            <input type="text" id="loginEmail" class="auth-input" placeholder="your@email.com" autocomplete="email" />
+          </div>
+          <div class="field-error" id="loginEmailError" style="display:none"></div>
+        </div>
+        <div class="auth-field">
+          <label class="auth-label">
+            Пароль
+            <button type="button" class="auth-forgot" onclick="switchTab('forgot')">Забув пароль?</button>
+          </label>
+          <div class="auth-input-wrap">
+            <span class="auth-input-icon">🔑</span>
+            <input type="password" id="loginPassword" class="auth-input" placeholder="••••••••" autocomplete="current-password" />
+            <button type="button" class="auth-eye" onclick="togglePass('loginPassword', this)">👁️</button>
+          </div>
+          <div class="field-error" id="loginPasswordError" style="display:none"></div>
+        </div>
+        <button type="submit" class="auth-btn auth-btn--primary" id="loginBtn">
+          <span class="auth-btn__text">🔐 Увійти до акаунту</span>
+          <span class="auth-btn__loader" style="display:none">⏳</span>
+        </button>
+      </form>
+
+      <!-- REGISTER FORM -->
+      <form class="auth-form" id="registerForm" style="display:none" onsubmit="handleRegister(event)">
+        <div class="auth-field">
+          <label class="auth-label">Ім'я</label>
+          <div class="auth-input-wrap">
+            <span class="auth-input-icon">👤</span>
+            <input type="text" id="regName" class="auth-input" placeholder="Твоє ім'я" required autocomplete="name" />
+          </div>
+        </div>
+        <div class="auth-field">
+          <label class="auth-label">Email</label>
+          <div class="auth-input-wrap">
+            <span class="auth-input-icon">📧</span>
+            <input type="email" id="regEmail" class="auth-input" placeholder="your@email.com" required autocomplete="email" />
+          </div>
+        </div>
+        <div class="auth-field">
+          <label class="auth-label">Пароль</label>
+          <div class="auth-input-wrap">
+            <span class="auth-input-icon">🔑</span>
+            <input type="password" id="regPassword" class="auth-input" placeholder="Мінімум 6 символів" required autocomplete="new-password" minlength="6" />
+            <button type="button" class="auth-eye" onclick="togglePass('regPassword', this)">👁️</button>
+          </div>
+        </div>
+        <div class="auth-field">
+          <label class="auth-label">Підтвердження пароля</label>
+          <div class="auth-input-wrap">
+            <span class="auth-input-icon">🔒</span>
+            <input type="password" id="regPassword2" class="auth-input" placeholder="Повтори пароль" required autocomplete="new-password" />
+            <button type="button" class="auth-eye" onclick="togglePass('regPassword2', this)">👁️</button>
+          </div>
+        </div>
+        <button type="submit" class="auth-btn auth-btn--primary" id="registerBtn">
+          <span class="auth-btn__text">Зареєструватись</span>
+          <span class="auth-btn__loader" style="display:none">⏳</span>
+        </button>
+      </form>
+
+      <!-- FORGOT PASSWORD FORM -->
+      <form class="auth-form" id="forgotForm" style="display:none" onsubmit="handleForgot(event)">
+        <div class="auth-back">
+          <button type="button" class="auth-back-btn" onclick="switchTab('login')">← Назад</button>
+          <span>Скидання пароля</span>
+        </div>
+        <p class="auth-hint">Введи свій email — надішлемо посилання для скидання пароля.</p>
+        <div class="auth-field">
+          <label class="auth-label">Email</label>
+          <div class="auth-input-wrap">
+            <span class="auth-input-icon">📧</span>
+            <input type="email" id="forgotEmail" class="auth-input" placeholder="your@email.com" required />
+          </div>
+        </div>
+        <button type="submit" class="auth-btn auth-btn--primary" id="forgotBtn">
+          <span class="auth-btn__text">Надіслати лист</span>
+          <span class="auth-btn__loader" style="display:none">⏳</span>
+        </button>
+      </form>
+
+      <!-- DIVIDER -->
+      <div class="auth-divider" id="authDivider">
+        <span>або</span>
+      </div>
+
+      <!-- GUEST -->
+      <button class="auth-btn auth-btn--guest" id="guestBtn" onclick="handleGuest()">
+        👤 Продовжити як гість
+      </button>
+
+    </div>
+
+    <!-- VERIFY EMAIL NOTICE (shown after register) — OTP -->
+    <div class="auth-verify" id="verifyNotice" style="display:none">
+      <div class="auth-verify__icon">📬</div>
+      <h2 class="auth-verify__title">Підтверди email!</h2>
+      <p class="auth-verify__text">Ми надіслали <strong>6-значний код</strong> на<br/><strong id="verifyEmail"></strong></p>
+
+      <div class="auth-alert" id="otpAlert" style="display:none"></div>
+
+      <!-- OTP inputs -->
+      <div class="otp-wrap">
+        <input class="otp-input" id="otp0" maxlength="1" type="text" inputmode="numeric" pattern="[0-9]" />
+        <input class="otp-input" id="otp1" maxlength="1" type="text" inputmode="numeric" pattern="[0-9]" />
+        <input class="otp-input" id="otp2" maxlength="1" type="text" inputmode="numeric" pattern="[0-9]" />
+        <span class="otp-dash">—</span>
+        <input class="otp-input" id="otp3" maxlength="1" type="text" inputmode="numeric" pattern="[0-9]" />
+        <input class="otp-input" id="otp4" maxlength="1" type="text" inputmode="numeric" pattern="[0-9]" />
+        <input class="otp-input" id="otp5" maxlength="1" type="text" inputmode="numeric" pattern="[0-9]" />
+      </div>
+
+      <div class="otp-timer">Код дійсний: <span id="otpTimer">10:00</span></div>
+
+      <button class="auth-btn auth-btn--primary" onclick="verifyOTP()" id="otpVerifyBtn">
+        <span class="auth-btn__text">✅ Підтвердити</span>
+        <span class="auth-btn__loader" style="display:none">⏳</span>
+      </button>
+      <button class="auth-btn auth-btn--guest" onclick="resendOTP()" id="otpResendBtn" style="margin-top:0">
+        📧 Надіслати код ще раз
+      </button>
+      <button class="auth-btn auth-btn--guest" onclick="backToRegister()" style="margin-top:0">
+        ← Назад
+      </button>
+    </div>
+
+  </div>
+
+  <!-- EMAILJS -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <!-- FIREBASE -->
+  <script type="module" src="auth.js"></script>

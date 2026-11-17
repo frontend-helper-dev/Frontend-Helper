@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="uk" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Frontend Helper — Профіль</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="auth.css" />
+  <link rel="stylesheet" href="profile.css" />
+  <link rel="stylesheet" href="chat.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header__inner container">
+      <a href="index.html" class="logo">
+        <span class="logo__icon">&#60;/&#62;</span>
+        <span class="logo__text">Frontend <span class="gradient-text">Helper</span></span>
+      </a>
+      <div class="header__actions">
+        <button class="theme-toggle" id="themeToggle" title="Змінити тему">
+          <span class="theme-toggle__icon" id="themeIcon">🌙</span>
+        </button>
+        <a href="index.html" class="btn btn--outline">← На головну</a>
+        <button class="btn btn--danger" onclick="handleSignOut()">Вийти</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="profile-main container">
+
+    <!-- PROFILE CARD -->
+    <div class="profile-card" id="profileCard">
+
+      <!-- AVATAR -->
+      <div class="profile-avatar-wrap">
+        <div class="profile-avatar" id="profileAvatar">
+          <img id="profileAvatarImg" src="" alt="" style="display:none" />
+          <span id="profileAvatarInitials">?</span>
+        </div>
+        <div class="profile-avatar__badge" id="adminBadge" style="display:none">👑 Admin</div>
+      </div>
+
+      <!-- INFO -->
+      <div class="profile-info">
+        <h1 class="profile-name" id="profileName">—</h1>
+        <p class="profile-email" id="profileEmail">—</p>
+        <div class="profile-verified" id="profileVerified"></div>
+      </div>
+
+      <!-- EDIT FORM -->
+      <div class="profile-section">
+        <h2 class="profile-section__title">✏️ Редагування профілю</h2>
+
+        <div class="auth-alert" id="profileAlert" style="display:none"></div>
+
+        <form class="profile-form" onsubmit="saveProfile(event)">
+          <div class="auth-field">
+            <label class="auth-label">Ім'я</label>
+            <div class="auth-input-wrap">
+              <span class="auth-input-icon">👤</span>
+              <input type="text" id="editName" class="auth-input" placeholder="Твоє ім'я" />
+            </div>
+          </div>
+
+          <div class="auth-field">
+            <label class="auth-label">Посилання на фото (URL)</label>
+            <div class="auth-input-wrap">
+              <span class="auth-input-icon">🖼️</span>
+              <input type="url" id="editPhotoUrl" class="auth-input" placeholder="https://example.com/photo.jpg" />
+            </div>
+          </div>
+
+          <!-- Photo preview -->
+          <div class="photo-preview" id="photoPreview" style="display:none">
+            <img id="photoPreviewImg" src="" alt="Preview" />
+            <span class="photo-preview__label">Попередній перегляд</span>
+          </div>
+
+          <button type="button" class="btn btn--outline" onclick="previewPhoto()">👁️ Переглянути фото</button>
+          <button type="submit" class="auth-btn auth-btn--primary" id="saveBtn">
+            <span class="auth-btn__text">💾 Зберегти зміни</span>
+            <span class="auth-btn__loader" style="display:none">⏳</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- CHANGE PASSWORD -->
+      <div class="profile-section">
+        <h2 class="profile-section__title">🔑 Змінити пароль</h2>
+        <p class="auth-hint">Натисни кнопку — ми надішлемо лист зі посиланням для зміни пароля на твій email.</p>
+        <div class="auth-alert" id="passAlert" style="display:none"></div>
+        <div class="profile-form">
+          <div class="pass-email-info" id="passEmailInfo">
+            📧 Лист буде надіслано на: <strong id="passEmailValue">—</strong>
+          </div>
+          <button class="auth-btn auth-btn--primary" id="passBtn" onclick="sendPasswordReset()">
+            <span class="auth-btn__text">📨 Надіслати лист для зміни пароля</span>
+            <span class="auth-btn__loader" style="display:none">⏳</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <script type="module" src="profile.js"></script>
+  <script type="module" src="chat.js"></script>
+</body>
+</html>

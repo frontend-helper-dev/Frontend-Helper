@@ -1,0 +1,338 @@
+/* =============================================
+   PROFILE.CSS — Профіль + Адмін панель
+   ============================================= */
+
+/* Extra btn styles */
+.btn--outline {
+  padding: 7px 16px;
+  border-radius: 10px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-family: var(--font-main);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-2);
+  cursor: pointer;
+  transition: var(--transition);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+.btn--outline:hover {
+  background: var(--bg-3);
+  color: var(--text);
+}
+
+.btn--danger {
+  padding: 7px 16px;
+  border-radius: 10px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-family: var(--font-main);
+  border: none;
+  background: rgba(239,68,68,0.12);
+  color: #f87171;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.btn--danger:hover { background: rgba(239,68,68,0.22); }
+
+/* =============================================
+   PROFILE MAIN LAYOUT
+   ============================================= */
+.profile-main {
+  padding: 48px 24px 80px;
+  max-width: 760px;
+}
+
+/* =============================================
+   PROFILE CARD
+   ============================================= */
+.profile-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Avatar */
+.profile-avatar-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 40px 32px 24px;
+  background: linear-gradient(135deg, rgba(102,126,234,0.12) 0%, rgba(168,85,247,0.08) 100%);
+  border-bottom: 1px solid var(--border);
+}
+
+.profile-avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 800;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(102,126,234,0.4);
+  flex-shrink: 0;
+}
+
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+}
+
+.profile-avatar__badge {
+  padding: 4px 12px;
+  background: linear-gradient(135deg, #f7971e, #ffd200);
+  color: #1a1000;
+  font-size: 0.75rem;
+  font-weight: 800;
+  border-radius: 100px;
+  letter-spacing: 0.04em;
+}
+
+/* Info */
+.profile-info {
+  text-align: center;
+  padding: 0 32px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  border-bottom: 1px solid var(--border);
+}
+
+.profile-name {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--text);
+  margin-top: 20px;
+}
+
+.profile-email {
+  font-size: 0.875rem;
+  color: var(--text-3);
+  font-family: var(--font-code);
+}
+
+.profile-verified {
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 100px;
+}
+.profile-verified--yes {
+  background: rgba(34,197,94,0.12);
+  color: #4ade80;
+  border: 1px solid rgba(34,197,94,0.2);
+}
+.profile-verified--no {
+  background: rgba(239,68,68,0.1);
+  color: #f87171;
+  border: 1px solid rgba(239,68,68,0.2);
+}
+[data-theme="light"] .profile-verified--yes { color: #16a34a; }
+[data-theme="light"] .profile-verified--no  { color: #dc2626; }
+
+/* Section */
+.profile-section {
+  padding: 28px 32px;
+  border-bottom: 1px solid var(--border);
+}
+.profile-section:last-child { border-bottom: none; }
+
+.profile-section__title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 20px;
+}
+
+/* Form */
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Photo preview */
+.photo-preview {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: var(--bg-3);
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+
+.photo-preview img {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--border);
+  flex-shrink: 0;
+}
+
+.photo-preview__label {
+  font-size: 0.8rem;
+  color: var(--text-3);
+  font-weight: 500;
+}
+
+/* =============================================
+   ADMIN PANEL
+   ============================================= */
+.admin-denied {
+  text-align: center;
+  padding: 80px 24px;
+}
+.admin-denied__icon { font-size: 3rem; margin-bottom: 16px; }
+.admin-denied h2 { font-size: 1.4rem; font-weight: 800; margin-bottom: 8px; color: var(--text); }
+.admin-denied p  { color: var(--text-2); }
+
+.admin-header {
+  margin-bottom: 28px;
+}
+.admin-title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--text);
+}
+.admin-sub {
+  color: var(--text-2);
+  font-size: 0.95rem;
+  margin-top: 4px;
+}
+
+/* Stats */
+.admin-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.admin-stat {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.admin-stat__icon { font-size: 2rem; flex-shrink: 0; }
+.admin-stat__num  { font-size: 1.6rem; font-weight: 800; line-height: 1; }
+.admin-stat__label { font-size: 0.78rem; color: var(--text-3); margin-top: 2px; }
+
+.admin-stat--blue   { border-top: 2px solid #667eea; }
+.admin-stat--blue .admin-stat__num { background: linear-gradient(135deg,#667eea,#764ba2); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+
+.admin-stat--purple { border-top: 2px solid #a855f7; }
+.admin-stat--purple .admin-stat__num { background: linear-gradient(135deg,#a855f7,#6366f1); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+
+.admin-stat--green  { border-top: 2px solid #11998e; }
+.admin-stat--green .admin-stat__num { background: linear-gradient(135deg,#11998e,#38ef7d); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+
+/* Admin info grid */
+.admin-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.admin-info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px;
+  background: var(--bg-3);
+  border-radius: 10px;
+}
+
+.admin-info-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+}
+
+.admin-info-value {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+  word-break: break-all;
+  font-family: var(--font-code);
+}
+
+/* Admin quick actions */
+.admin-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+}
+
+.admin-action {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-family: var(--font-main);
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: var(--bg-3);
+  color: var(--text-2);
+  text-decoration: none;
+  transition: var(--transition);
+}
+.admin-action:hover { transform: translateY(-2px); color: var(--text); }
+
+.admin-action--blue:hover   { border-color: #667eea; background: rgba(102,126,234,0.1); }
+.admin-action--purple:hover { border-color: #a855f7; background: rgba(168,85,247,0.1); }
+.admin-action--green:hover  { border-color: #11998e; background: rgba(17,153,142,0.1); }
+.admin-action--orange:hover { border-color: #f7971e; background: rgba(247,151,30,0.1); }
+
+/* Mobile */
+@media (max-width: 600px) {
+  .profile-section  { padding: 20px 18px; }
+  .profile-avatar-wrap { padding: 28px 18px 20px; }
+  .profile-info     { padding: 0 18px 20px; }
+  .admin-info-grid  { grid-template-columns: 1fr; }
+  .admin-actions    { grid-template-columns: 1fr 1fr; }
+}
+
+.pass-email-info {
+  padding: 12px 16px;
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: 0.875rem;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+.pass-email-info strong {
+  color: var(--text);
+  font-family: var(--font-code);
+}

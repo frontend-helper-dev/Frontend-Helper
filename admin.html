@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="uk" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Frontend Helper — Адмін панель</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="auth.css" />
+  <link rel="stylesheet" href="profile.css" />
+  <link rel="stylesheet" href="chat.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <header class="header">
+    <div class="header__inner container">
+      <a href="index.html" class="logo">
+        <span class="logo__icon">&#60;/&#62;</span>
+        <span class="logo__text">Frontend <span class="gradient-text">Helper</span></span>
+      </a>
+      <div class="header__actions">
+        <button class="theme-toggle" id="themeToggle" title="Змінити тему">
+          <span class="theme-toggle__icon" id="themeIcon">🌙</span>
+        </button>
+        <a href="index.html" class="btn btn--outline">← На головну</a>
+        <button class="btn btn--danger" onclick="handleSignOut()">Вийти</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="profile-main container">
+
+    <!-- ACCESS DENIED (shown to non-admins) -->
+    <div class="admin-denied" id="adminDenied" style="display:none">
+      <div class="admin-denied__icon">🚫</div>
+      <h2>Доступ заборонено</h2>
+      <p>Ця сторінка доступна тільки адміністратору.</p>
+      <a href="index.html" class="auth-btn auth-btn--primary" style="margin-top:8px; text-decoration:none; display:inline-flex;">← На головну</a>
+    </div>
+
+    <!-- ADMIN PANEL -->
+    <div id="adminPanel" style="display:none">
+
+      <div class="admin-header">
+        <div>
+          <h1 class="admin-title">👑 Адмін панель</h1>
+          <p class="admin-sub">Управління сайтом Frontend Helper</p>
+        </div>
+      </div>
+
+      <!-- STATS -->
+      <div class="admin-stats">
+        <div class="admin-stat admin-stat--blue">
+          <span class="admin-stat__icon">👥</span>
+          <div>
+            <div class="admin-stat__num" id="statUsers">—</div>
+            <div class="admin-stat__label">Зареєстровано користувачів</div>
+          </div>
+        </div>
+        <div class="admin-stat admin-stat--purple">
+          <span class="admin-stat__icon">📚</span>
+          <div>
+            <div class="admin-stat__num">64</div>
+            <div class="admin-stat__label">Ресурсів на сайті</div>
+          </div>
+        </div>
+        <div class="admin-stat admin-stat--green">
+          <span class="admin-stat__icon">🗂️</span>
+          <div>
+            <div class="admin-stat__num">8</div>
+            <div class="admin-stat__label">Категорій</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADMIN INFO -->
+      <div class="profile-card" style="margin-top:0">
+        <div class="profile-section">
+          <h2 class="profile-section__title">⚙️ Інформація про адміна</h2>
+          <div class="admin-info-grid">
+            <div class="admin-info-item">
+              <span class="admin-info-label">Ім'я</span>
+              <span class="admin-info-value" id="adminName">—</span>
+            </div>
+            <div class="admin-info-item">
+              <span class="admin-info-label">Email</span>
+              <span class="admin-info-value" id="adminEmail">—</span>
+            </div>
+            <div class="admin-info-item">
+              <span class="admin-info-label">Email підтверджено</span>
+              <span class="admin-info-value" id="adminVerified">—</span>
+            </div>
+            <div class="admin-info-item">
+              <span class="admin-info-label">Роль</span>
+              <span class="admin-info-value" style="color:#a855f7; font-weight:700;">👑 Administrator</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- QUICK ACTIONS -->
+        <div class="profile-section">
+          <h2 class="profile-section__title">🚀 Швидкі дії</h2>
+          <div class="admin-actions">
+            <a href="profile.html" class="admin-action admin-action--blue">
+              <span>✏️</span>
+              <span>Редагувати профіль</span>
+            </a>
+            <a href="index.html" class="admin-action admin-action--purple">
+              <span>🌐</span>
+              <span>Переглянути сайт</span>
+            </a>
+            <button class="admin-action admin-action--green" onclick="copyAdminEmail()">
+              <span>📋</span>
+              <span>Копіювати email</span>
+            </button>
+            <button class="admin-action admin-action--orange" onclick="handleSignOut()">
+              <span>🚪</span>
+              <span>Вийти з акаунту</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- AI SETTINGS CARD -->
+      <div class="profile-card" style="margin-top:24px">
+
+        <div class="ai-prompt-section">
+          <h2 class="profile-section__title">🤖 Налаштування AI Асистента</h2>
+          <div class="ai-status">AI активний</div>
+          <p class="ai-prompt-hint">
+            Тут ти пишеш інструкції для AI — він буде слідувати їм при відповідях користувачам.<br/>
+            Вкажи теми, стиль відповідей, обмеження. Зміни застосовуються одразу для всіх.
+          </p>
+          <textarea
+            class="ai-prompt-textarea"
+            id="systemPromptTextarea"
+            placeholder="Напиши інструкції для AI..."
+          ></textarea>
+          <div>
+            <button class="ai-save-btn" id="savePromptBtn" onclick="savePrompt()">
+              💾 Зберегти інструкції
+            </button>
+            <span class="ai-save-status" id="saveStatus">✅ Збережено!</span>
+          </div>
+        </div>
+
+        <div class="ai-prompt-section">
+          <h2 class="profile-section__title">🧪 Тест AI</h2>
+          <p class="ai-prompt-hint">Відправ тестове питання щоб перевірити як AI відповідає з поточними інструкціями.</p>
+          <div class="ai-test-chat" id="aiTestResult">Тут з'явиться відповідь AI...</div>
+          <div style="display:flex;gap:8px">
+            <input type="text" id="aiTestInput" class="auth-input" placeholder="Введи тестове питання..." style="flex:1" />
+            <button class="ai-save-btn" onclick="testAI()">Відправити</button>
+          </div>
+        </div>
+
+        <div class="ai-prompt-section">
+          <h2 class="profile-section__title">📜 Історія запитів</h2>
+          <p class="ai-prompt-hint">Всі запити які користувачі надсилали до AI. Оновлюється в реальному часі.</p>
+          <div style="display:flex;gap:8px;margin-bottom:12px">
+            <button class="ai-save-btn" onclick="loadHistory()">🔄 Оновити</button>
+            <button class="ai-save-btn" style="background:linear-gradient(135deg,#ef4444,#b91c1c)" onclick="clearHistory()">🗑️ Очистити всі</button>
+          </div>
+          <div id="aiHistory" style="display:flex;flex-direction:column;gap:8px;max-height:400px;overflow-y:auto"></div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <script type="module" src="admin.js"></script>
+  <script type="module" src="chat.js"></script>
+</body>
+</html>

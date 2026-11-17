@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="uk" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Frontend Helper — Ресурси для розробників</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="auth.css" />
+  <link rel="stylesheet" href="modal.css" />
+  <link rel="stylesheet" href="chat.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header__inner container">
+      <div class="logo">
+        <span class="logo__icon">&#60;/&#62;</span>
+        <span class="logo__text">Frontend <span class="gradient-text">Helper</span></span>
+      </div>
+      <nav class="nav" id="nav">
+        <a href="#docs" class="nav__link">Документація</a>
+        <a href="#tools" class="nav__link">Інструменти</a>
+        <a href="#ui" class="nav__link">UI бібліотеки</a>
+        <a href="#icons" class="nav__link">Іконки & Шрифти</a>
+        <a href="#learn" class="nav__link">Навчання</a>
+        <a href="#colors" class="nav__link">Кольори</a>
+        <a href="#perf" class="nav__link">Перформанс</a>
+        <a href="#deploy" class="nav__link">Деплой</a>
+      </nav>
+      <div class="header__actions">
+        <button class="theme-toggle" id="themeToggle" title="Змінити тему">
+          <span class="theme-toggle__icon" id="themeIcon">🌙</span>
+        </button>
+        <div class="user-menu" id="userMenu" style="display:none">
+          <button class="user-avatar" id="userAvatarBtn" onclick="toggleUserDropdown()">
+            <span id="userAvatarText">?</span>
+          </button>
+          <div class="user-dropdown" id="userDropdown" style="display:none">
+            <div class="user-dropdown__info">
+              <div class="user-dropdown__name" id="dropdownName">—</div>
+              <div class="user-dropdown__email" id="dropdownEmail">—</div>
+            </div>
+            <div class="user-dropdown__divider"></div>
+            <a href="profile.html" class="user-dropdown__item">✏️ Редагувати профіль</a>
+            <a href="admin.html" class="user-dropdown__item" id="adminDropdownLink" style="display:none">👑 Адмін панель</a>
+            <div class="user-dropdown__divider"></div>
+            <button class="user-dropdown__item user-dropdown__item--danger" onclick="handleSignOut()">🚪 Вийти</button>
+          </div>
+        </div>
+        <div class="guest-badge" id="guestBadge" style="display:none">
+          <span>👤 Гість</span>
+          <a href="auth.html" class="guest-badge__login">Увійти</a>
+        </div>
+        <button class="burger" id="burger" aria-label="Меню"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <div class="verify-banner" id="verifyBanner" style="display:none">
+    📧 Підтверди свій email щоб отримати повний доступ.
+    <button onclick="resendFromMain()" class="verify-banner__btn">Надіслати ще раз</button>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero__bg"></div>
+    <div class="container hero__inner">
+      <div class="hero__badge">✦ Для frontend розробників</div>
+      <h1 class="hero__title">Всі потрібні ресурси<br/><span class="gradient-text">в одному місці</span></h1>
+      <p class="hero__subtitle">Документація, інструменти, UI-бібліотеки, іконки, курси, деплой та багато іншого — зібрано і відсортовано для тебе.</p>
+      <div class="hero__search">
+        <span class="hero__search-icon">🔍</span>
+        <input type="text" id="searchInput" placeholder="Пошук ресурсу..." class="search-input" />
+        <button class="btn btn--primary" onclick="clearSearch()">Очистити</button>
+      </div>
+      <div class="hero__stats">
+        <div class="stat"><span class="stat__num" id="totalCount">0</span><span class="stat__label">ресурсів</span></div>
+        <div class="stat"><span class="stat__num">8</span><span class="stat__label">категорій</span></div>
+        <div class="stat"><span class="stat__num">100%</span><span class="stat__label">безкоштовно</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN CONTENT -->
+  <main class="main container" id="mainContent">
+
+    <!-- DOCS -->
+    <section class="section" id="docs">
+      <div class="section__header">
+        <div class="section__icon">📚</div>
+        <div><h2 class="section__title">Документація</h2><p class="section__desc">Офіційні та неофіційні довідники</p></div>
+      </div>
+      <div class="cards">
+        <div class="card card--blue" onclick="openModal('MDN Web Docs','https://developer.mozilla.org','developer.mozilla.org','Must have','Найповніша документація по HTML, CSS, JavaScript і Web API від Mozilla. Містить довідник по всіх тегах, властивостях CSS, методах JS та Web API. Є інтерактивні приклади прямо на сторінці. Перший ресурс який варто відкрити при будь-якому питанні.','• Довідник HTML тегів та атрибутів\n• Повний CSS-референс з прикладами\n• JavaScript API та вбудовані методи\n• Web API: Fetch, Canvas, WebSocket і ін.\n• Інтерактивна консоль для тестування')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=developer.mozilla.org&sz=32" alt=""/><span class="card__tag">Must have</span></div>
+          <h3 class="card__title">MDN Web Docs</h3>
+          <p class="card__desc">Найповніша документація по HTML, CSS, JavaScript і Web API від Mozilla.</p>
+          <div class="card__footer"><span class="card__link">developer.mozilla.org →</span></div>
+        </div>
+        <div class="card card--purple" onclick="openModal('DevDocs','https://devdocs.io','devdocs.io','Агрегатор','Документація по сотнях технологій в одному місці. Працює офлайн — можна зберегти будь-який набір доків і користуватись без інтернету. Зручний пошук по всіх технологіях одночасно.','• 100+ технологій в одному місці\n• Офлайн режим (PWA)\n• Швидкий пошук по всіх доках\n• React, Vue, Node, Python, Ruby і ін.\n• Кастомний набір — вибираєш що зберегти')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=devdocs.io&sz=32" alt=""/><span class="card__tag">Агрегатор</span></div>
+          <h3 class="card__title">DevDocs</h3>
+          <p class="card__desc">Документація по сотнях технологій в одному місці. Працює офлайн.</p>
+          <div class="card__footer"><span class="card__link">devdocs.io →</span></div>
+        </div>
+        <div class="card card--pink" onclick="openModal('CSS-Tricks','https://css-tricks.com','css-tricks.com','CSS','Легендарний сайт з гайдами, статтями та трюками по CSS. Тут є знаменитий Flexbox Guide та Grid Guide — найкращі візуальні пояснення цих технологій. Мільйони розробників почали розуміти CSS саме звідси.','• Повний гайд по Flexbox з візуалізацією\n• Повний гайд по CSS Grid\n• Статті про анімації, трансформації\n• Сніпети та готові рішення\n• Відео та подкасти по CSS')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=css-tricks.com&sz=32" alt=""/><span class="card__tag">CSS</span></div>
+          <h3 class="card__title">CSS-Tricks</h3>
+          <p class="card__desc">Статті, гайди та трюки по CSS. Легендарний ресурс для стилізації.</p>
+          <div class="card__footer"><span class="card__link">css-tricks.com →</span></div>
+        </div>
+        <div class="card card--orange" onclick="openModal('JavaScript.info','https://javascript.info','javascript.info','JavaScript','Найкращий сучасний підручник по JavaScript у вигляді структурованих статей. Охоплює все — від основ до просунутих тем. Доступний українською та ще 10 мовами. Ідеально підходить для початківців і для поглиблення знань.','• Основи JS: змінні, типи, функції\n• ООП, прототипи, класи\n• Асинхронність: Promise, async/await\n• DOM, події, браузерні API\n• Є переклад українською мовою')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=javascript.info&sz=32" alt=""/><span class="card__tag">JavaScript</span></div>
+          <h3 class="card__title">JavaScript.info</h3>
+          <p class="card__desc">Сучасний підручник по JavaScript. Є переклад українською.</p>
+          <div class="card__footer"><span class="card__link">javascript.info →</span></div>
+        </div>
+        <div class="card card--green" onclick="openModal('web.dev','https://web.dev','web.dev','Google','Офіційний ресурс Google для веб-розробників. Гайди по Core Web Vitals, перформансу, PWA, доступності та сучасних патернах. Всі статті написані експертами Chrome команди.','• Core Web Vitals та SEO оптимізація\n• Progressive Web Apps (PWA)\n• Веб-доступність (a11y)\n• Сучасні CSS та JS можливості\n• Навчальні курси та codelab')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=web.dev&sz=32" alt=""/><span class="card__tag">Google</span></div>
+          <h3 class="card__title">web.dev</h3>
+          <p class="card__desc">Гайди від Google по сучасній веб-розробці, перформансу та PWA.</p>
+          <div class="card__footer"><span class="card__link">web.dev →</span></div>
+        </div>
+        <div class="card card--teal" onclick="openModal('Can I Use','https://caniuse.com','caniuse.com','Сумісність','Незамінний інструмент для перевірки підтримки CSS/HTML/JS функцій у браузерах. Показує відсоток користувачів що мають підтримку, версії браузерів, відомі баги.','• Підтримка CSS властивостей по браузерах\n• HTML5 елементи та API\n• JavaScript функції та синтаксис\n• Відсоток глобального покриття\n• Відомі баги та workarounds')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=caniuse.com&sz=32" alt=""/><span class="card__tag">Сумісність</span></div>
+          <h3 class="card__title">Can I Use</h3>
+          <p class="card__desc">Перевірка підтримки CSS/HTML/JS-фіч в різних браузерах.</p>
+          <div class="card__footer"><span class="card__link">caniuse.com →</span></div>
+        </div>
+        <div class="card card--blue" onclick="openModal('TypeScript Docs','https://www.typescriptlang.org/docs','typescriptlang.org','TypeScript','Офіційна документація TypeScript від Microsoft. Містить повний довідник по типах, інтерфейсах, generics, utility types та конфігурації. Є інтерактивний TypeScript Playground для тестування.','• Базові та складені типи\n• Інтерфейси та generics\n• Utility Types: Partial, Pick, Omit і ін.\n• tsconfig.json довідник\n• TypeScript Playground онлайн')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=typescriptlang.org&sz=32" alt=""/><span class="card__tag">TypeScript</span></div>
+          <h3 class="card__title">TypeScript Docs</h3>
+          <p class="card__desc">Офіційна документація TypeScript з прикладами та довідником по типах.</p>
+          <div class="card__footer"><span class="card__link">typescriptlang.org →</span></div>
+        </div>
+        <div class="card card--purple" onclick="openModal('React Docs','https://react.dev','react.dev','React','Офіційна документація React на новому сайті react.dev. Повністю переписана у 2023 році з інтерактивними прикладами, завданнями та поясненнями hooks. Найкраще місце для вивчення сучасного React.','• React Hooks: useState, useEffect і ін.\n• Компоненти та props\n• Управління станом\n• Інтерактивні завдання прямо на сайті\n• Нові можливості React 18/19')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=react.dev&sz=32" alt=""/><span class="card__tag">React</span></div>
+          <h3 class="card__title">React Docs</h3>
+          <p class="card__desc">Офіційна документація React з новим сайтом react.dev і інтерактивними прикладами.</p>
+          <div class="card__footer"><span class="card__link">react.dev →</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOOLS -->
+    <section class="section" id="tools">
+      <div class="section__header">
+        <div class="section__icon">🛠️</div>
+        <div><h2 class="section__title">Інструменти</h2><p class="section__desc">Редактори, bundler-и, лінтери та dev-утиліти</p></div>
+      </div>
+      <div class="cards">
+        <div class="card card--blue" onclick="openModal('VS Code','https://code.visualstudio.com','code.visualstudio.com','Редактор','Найпопулярніший безкоштовний редактор коду від Microsoft. Величезна екосистема розширень, вбудований Git, термінал, дебаггер. Підтримує всі мови програмування через розширення.','• Вбудований Git та дебаггер\n• 50,000+ розширень в маркетплейсі\n• IntelliSense та автодоповнення\n• Вбудований термінал\n• Live Share — спільне редагування')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=code.visualstudio.com&sz=32" alt=""/><span class="card__tag">Редактор</span></div>
+          <h3 class="card__title">VS Code</h3>
+          <p class="card__desc">Найпопулярніший безкоштовний редактор коду від Microsoft.</p>
+          <div class="card__footer"><span class="card__link">code.visualstudio.com →</span></div>
+        </div>
+        <div class="card card--purple" onclick="openModal('Vite','https://vitejs.dev','vitejs.dev','Bundler','Надшвидкий build-інструмент нового покоління на основі ESM та esbuild. Запуск dev-сервера за долі секунди, HMR (гаряча заміна модулів) майже миттєво. Офіційно рекомендується для React, Vue, Svelte проектів.','• Старт dev-сервера &lt; 300ms\n• HMR — оновлення без перезавантаження\n• Підтримка TypeScript з коробки\n• Плагіни для React, Vue, Svelte\n• Оптимізований production build')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=vitejs.dev&sz=32" alt=""/><span class="card__tag">Bundler</span></div>
+          <h3 class="card__title">Vite</h3>
+          <p class="card__desc">Надшвидкий build-інструмент нового покоління. Гаряча заміна Webpack.</p>
+          <div class="card__footer"><span class="card__link">vitejs.dev →</span></div>
+        </div>
+        <div class="card card--pink" onclick="openModal('Prettier','https://prettier.io','prettier.io','Форматер','Автоматичний форматер коду який підтримує JS, TS, CSS, HTML, JSON, Markdown та багато іншого. Прибирає всі суперечки про стиль коду в команді — просто налаштовуєш один раз і забуваєш.','• Форматування JS, TS, CSS, HTML\n• Інтеграція з VS Code (формат при збереженні)\n• Налаштування через .prettierrc\n• Підтримка більшості мов та форматів\n• Pre-commit hook через lint-staged')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=prettier.io&sz=32" alt=""/><span class="card__tag">Форматер</span></div>
+          <h3 class="card__title">Prettier</h3>
+          <p class="card__desc">Автоматичне форматування коду. Підтримує JS, TS, CSS, HTML і не тільки.</p>
+          <div class="card__footer"><span class="card__link">prettier.io →</span></div>
+        </div>
+        <div class="card card--orange" onclick="openModal('ESLint','https://eslint.org','eslint.org','Лінтер','Статичний аналізатор JavaScript та TypeScript коду. Знаходить помилки, потенційні баги та порушення стилю ще до запуску. Гнучко налаштовується через rules, підтримує сотні plugins.','• Пошук помилок та потенційних багів\n• Автовиправлення частини проблем\n• Плагіни для React, Vue, TypeScript\n• Налаштування через .eslintrc\n• Інтеграція з VS Code та CI/CD')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=eslint.org&sz=32" alt=""/><span class="card__tag">Лінтер</span></div>
+          <h3 class="card__title">ESLint</h3>
+          <p class="card__desc">Статичний аналіз JS/TS коду для пошуку та виправлення помилок.</p>
+          <div class="card__footer"><span class="card__link">eslint.org →</span></div>
+        </div>
+        <div class="card card--green" onclick="openModal('Figma','https://www.figma.com','figma.com','Дизайн','Найпопулярніший браузерний інструмент для дизайну UI/UX. Колаборація в реальному часі, компоненти, auto-layout, прототипування та Dev Mode для розробників. Має безкоштовний план.','• Колаборація в реальному часі\n• Компоненти та design tokens\n• Auto-layout для адаптивного дизайну\n• Прототипування та анімації\n• Dev Mode — CSS/код з дизайну')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=figma.com&sz=32" alt=""/><span class="card__tag">Дизайн</span></div>
+          <h3 class="card__title">Figma</h3>
+          <p class="card__desc">Браузерний інструмент дизайну UI/UX. Колаборація в реальному часі.</p>
+          <div class="card__footer"><span class="card__link">figma.com →</span></div>
+        </div>
+        <div class="card card--teal" onclick="openModal('GitHub','https://github.com','github.com','Git','Найбільша платформа для хостингу коду та співпраці. Git репозиторії, pull requests, code review, GitHub Actions для CI/CD, GitHub Pages для хостингу. Безкоштовно для відкритих проектів.','• Git репозиторії (публічні і приватні)\n• Pull Requests та Code Review\n• GitHub Actions — CI/CD pipeline\n• GitHub Pages — безкоштовний хостинг\n• Issues та Project boards')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=github.com&sz=32" alt=""/><span class="card__tag">Git</span></div>
+          <h3 class="card__title">GitHub</h3>
+          <p class="card__desc">Платформа для хостингу коду, CI/CD, code review і відкритих проектів.</p>
+          <div class="card__footer"><span class="card__link">github.com →</span></div>
+        </div>
+        <div class="card card--blue" onclick="openModal('Storybook','https://storybook.js.org','storybook.js.org','UI Dev','Інструмент для розробки та документування UI-компонентів ізольовано від застосунку. Дозволяє бачити компонент у всіх можливих станах, тестувати його та автоматично генерувати документацію.','• Розробка компонентів ізольовано\n• Всі стани компонента в одному місці\n• Автогенерація документації\n• Visual testing та snapshots\n• Підтримка React, Vue, Angular, Svelte')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=storybook.js.org&sz=32" alt=""/><span class="card__tag">UI Dev</span></div>
+          <h3 class="card__title">Storybook</h3>
+          <p class="card__desc">Розробка та документування UI-компонентів ізольовано від застосунку.</p>
+          <div class="card__footer"><span class="card__link">storybook.js.org →</span></div>
+        </div>
+        <div class="card card--pink" onclick="openModal('npm','https://www.npmjs.com','npmjs.com','Пакети','Найбільший реєстр JavaScript пакетів — понад 2 мільйони пакетів. Тут можна знайти бібліотеку для будь-якого завдання, переглянути документацію, статистику завантажень та залежності.','• 2+ мільйони пакетів\n• Статистика завантажень\n• Граф залежностей\n• Пошук за ключовими словами\n• Версії та changelog')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=npmjs.com&sz=32" alt=""/><span class="card__tag">Пакети</span></div>
+          <h3 class="card__title">npm</h3>
+          <p class="card__desc">Найбільший реєстр JavaScript пакетів. Мільйони бібліотек.</p>
+          <div class="card__footer"><span class="card__link">npmjs.com →</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- UI LIBRARIES -->
+    <section class="section" id="ui">
+      <div class="section__header">
+        <div class="section__icon">🎨</div>
+        <div><h2 class="section__title">UI Бібліотеки & Фреймворки</h2><p class="section__desc">Готові компоненти та CSS-фреймворки</p></div>
+      </div>
+      <div class="cards">
+        <div class="card card--teal" onclick="openModal('Tailwind CSS','https://tailwindcss.com','tailwindcss.com','CSS','Utility-first CSS фреймворк — замість написання CSS класів ти одразу додаєш утилітарні класи в HTML. Шалено популярний завдяки швидкості розробки та легкій кастомізації через tailwind.config.','• Utility-first підхід\n• JIT компілятор — тільки потрібний CSS\n• Responsive prefixes: sm:, md:, lg:\n• Dark mode з класом dark:\n• Кастомна тема через конфіг')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=tailwindcss.com&sz=32" alt=""/><span class="card__tag">CSS</span></div>
+          <h3 class="card__title">Tailwind CSS</h3>
+          <p class="card__desc">Utility-first CSS фреймворк. Шалено популярний у 2024–2026.</p>
+          <div class="card__footer"><span class="card__link">tailwindcss.com →</span></div>
+        </div>
+        <div class="card card--purple" onclick="openModal('Bootstrap','https://getbootstrap.com','getbootstrap.com','CSS','Найстаріший та найвідоміший CSS-фреймворк. Bootstrap 5 позбувся залежності від jQuery. Містить готові компоненти, grid систему, утиліти та JavaScript плагіни. Ідеально для швидкого прототипування.','• Grid система на 12 колонок\n• 30+ готових компонентів\n• JavaScript плагіни (modal, dropdown і ін.)\n• Sass змінні для кастомізації\n• Bootstrap Icons — окрема бібліотека')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=getbootstrap.com&sz=32" alt=""/><span class="card__tag">CSS</span></div>
+          <h3 class="card__title">Bootstrap</h3>
+          <p class="card__desc">Класичний CSS-фреймворк з готовими компонентами. Bootstrap 5 без jQuery.</p>
+          <div class="card__footer"><span class="card__link">getbootstrap.com →</span></div>
+        </div>
+        <div class="card card--blue" onclick="openModal('shadcn/ui','https://ui.shadcn.com','ui.shadcn.com','React','Не бібліотека а колекція компонентів які ти копіюєш у свій проект. Побудована на Tailwind CSS та Radix UI. Повний контроль над кодом, легка кастомізація. Дуже популярна у 2025-2026.','• Компоненти копіюються в проект\n• Побудована на Tailwind + Radix UI\n• Темна тема з коробки\n• CLI для встановлення компонентів\n• Повний контроль над стилями')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=ui.shadcn.com&sz=32" alt=""/><span class="card__tag">React</span></div>
+          <h3 class="card__title">shadcn/ui</h3>
+          <p class="card__desc">Копіюй-вставляй UI-компоненти на Tailwind+Radix. Трендово у 2025–2026.</p>
+          <div class="card__footer"><span class="card__link">ui.shadcn.com →</span></div>
+        </div>
+        <div class="card card--pink" onclick="openModal('DaisyUI','https://daisyui.com','daisyui.com','Tailwind','Компонентна бібліотека поверх Tailwind CSS. Додає семантичні класи типу btn, card, modal. Підтримує 30+ тем, легко перемикати між ними. Встановлюється як плагін Tailwind.','• 30+ готових тем\n• Семантичні класи: btn, card, badge\n• Встановлення як Tailwind плагін\n• Підтримка темної теми\n• Великий набір компонентів')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=daisyui.com&sz=32" alt=""/><span class="card__tag">Tailwind</span></div>
+          <h3 class="card__title">DaisyUI</h3>
+          <p class="card__desc">Компонентна бібліотека поверх Tailwind CSS. Кастомні теми, легка інтеграція.</p>
+          <div class="card__footer"><span class="card__link">daisyui.com →</span></div>
+        </div>
+        <div class="card card--blue" onclick="openModal('Material UI','https://mui.com','mui.com','React','Найпопулярніша React UI бібліотека. Реалізує Material Design від Google. Великий набір компонентів, система тем, підтримка TypeScript. MUI v6 з підтримкою CSS variables.','• 50+ компонентів Material Design\n• Система тем та кольорів\n• TypeScript підтримка\n• Data Grid та Date Picker\n• Joy UI — альтернативна дизайн система')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=mui.com&sz=32" alt=""/><span class="card__tag">React</span></div>
+          <h3 class="card__title">Material UI</h3>
+          <p class="card__desc">Компоненти React в стилі Material Design від Google.</p>
+          <div class="card__footer"><span class="card__link">mui.com →</span></div>
+        </div>
+        <div class="card card--orange" onclick="openModal('Ant Design','https://ant.design','ant.design','React','Потужна enterprise-рівня система дизайну від Alibaba. Величезний набір компонентів для складних додатків — таблиці, форми, charts, дерева. Дуже популярна в корпоративних проектах.','• 60+ компонентів enterprise-рівня\n• Потужні таблиці та форми\n• Charts та Data Visualization\n• Система дизайн-токенів\n• Підтримка TypeScript та Next.js')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=ant.design&sz=32" alt=""/><span class="card__tag">React</span></div>
+          <h3 class="card__title">Ant Design</h3>
+          <p class="card__desc">Потужна система дизайну від Alibaba. Великий набір компонентів.</p>
+          <div class="card__footer"><span class="card__link">ant.design →</span></div>
+        </div>
+        <div class="card card--teal" onclick="openModal('Chakra UI','https://chakra-ui.com','chakra-ui.com','React','Доступна та кастомізована React UI бібліотека з акцентом на доступність та простоту. Вбудована підтримка темної теми, composition API, styled system. Chakra UI v3 з повним рефакторингом.','• Вбудована доступність (a11y)\n• Dark mode з коробки\n• Styled props для кастомізації\n• Composition API для компонентів\n• Простий та зрозумілий API')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=chakra-ui.com&sz=32" alt=""/><span class="card__tag">React</span></div>
+          <h3 class="card__title">Chakra UI</h3>
+          <p class="card__desc">Доступні та кастомізовані React-компоненти з підтримкою тем.</p>
+          <div class="card__footer"><span class="card__link">chakra-ui.com →</span></div>
+        </div>
+        <div class="card card--green" onclick="openModal('Vuetify','https://vuetifyjs.com','vuetifyjs.com','Vue','Найпопулярніша UI бібліотека для Vue 3. Реалізує Material Design, містить 80+ компонентів, систему тем, responsive grid. Vuetify 3 повністю написаний на TypeScript з Composition API.','• 80+ компонентів Material Design\n• TypeScript + Composition API\n• Responsive grid система\n• Система тем та кольорів\n• Vite та Nuxt інтеграція')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=vuetifyjs.com&sz=32" alt=""/><span class="card__tag">Vue</span></div>
+          <h3 class="card__title">Vuetify</h3>
+          <p class="card__desc">UI-бібліотека для Vue 3 на основі Material Design.</p>
+          <div class="card__footer"><span class="card__link">vuetifyjs.com →</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ICONS & FONTS -->
+    <section class="section" id="icons">
+      <div class="section__header">
+        <div class="section__icon">🖼️</div>
+        <div><h2 class="section__title">Іконки & Шрифти</h2><p class="section__desc">SVG-іконки, шрифти та зображення</p></div>
+      </div>
+      <div class="cards">
+        <div class="card card--blue" onclick="openModal('Google Fonts','https://fonts.google.com','fonts.google.com','Шрифти','Безкоштовна бібліотека веб-шрифтів від Google. Понад 1500 шрифтів, підключення одним рядком CSS або через npm. Є фільтрація по мові, стилю, популярності.','• 1500+ безкоштовних шрифтів\n• Підключення через CSS @import\n• Фільтр по мові та стилю\n• Variable fonts підтримка\n• Google Icons — іконки як шрифт')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=fonts.google.com&sz=32" alt=""/><span class="card__tag">Шрифти</span></div>
+          <h3 class="card__title">Google Fonts</h3>
+          <p class="card__desc">Понад 1500 безкоштовних веб-шрифтів від Google. Легко підключити.</p>
+          <div class="card__footer"><span class="card__link">fonts.google.com →</span></div>
+        </div>
+        <div class="card card--purple" onclick="openModal('Font Awesome','https://fontawesome.com','fontawesome.com','Іконки','Класична і найпопулярніша бібліотека іконок. Безкоштовний план містить 2000+ іконок. Підключення через CDN, npm або SVG. Є React, Vue компоненти.','• 2000+ безкоштовних іконок\n• React та Vue компоненти\n• SVG, веб-шрифт або JS варіанти\n• Pro план — 26000+ іконок\n• Icon kit — набори по тематиці')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=fontawesome.com&sz=32" alt=""/><span class="card__tag">Іконки</span></div>
+          <h3 class="card__title">Font Awesome</h3>
+          <p class="card__desc">Класична бібліотека іконок. Тисячі безкоштовних SVG-іконок.</p>
+          <div class="card__footer"><span class="card__link">fontawesome.com →</span></div>
+        </div>
+        <div class="card card--teal" onclick="openModal('Lucide Icons','https://lucide.dev','lucide.dev','SVG','Красива та консистентна бібліотека SVG-іконок. Відкритий форк Feather Icons. 1500+ іконок, доступні як SVG файли, React/Vue/Svelte компоненти або через CDN.','• 1500+ іконок\n• React, Vue, Svelte компоненти\n• Кастомізація розміру та кольору\n• Консистентний дизайн\n• MIT ліцензія — безкоштовно')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=lucide.dev&sz=32" alt=""/><span class="card__tag">SVG</span></div>
+          <h3 class="card__title">Lucide Icons</h3>
+          <p class="card__desc">Красиві, консистентні SVG-іконки. Відкритий форк Feather Icons.</p>
+          <div class="card__footer"><span class="card__link">lucide.dev →</span></div>
+        </div>
+        <div class="card card--green" onclick="openModal('Heroicons','https://heroicons.com','heroicons.com','SVG','Безкоштовні SVG-іконки від творців Tailwind CSS. 300+ іконок у двох стилях: outline та solid. Є React та Vue компоненти. Ідеально поєднуються з Tailwind CSS проектами.','• 300+ іконок у двох стилях\n• Outline та Solid варіанти\n• React та Vue компоненти\n• Оптимізовані SVG файли\n• Від команди Tailwind CSS')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=heroicons.com&sz=32" alt=""/><span class="card__tag">SVG</span></div>
+          <h3 class="card__title">Heroicons</h3>
+          <p class="card__desc">Безкоштовні SVG-іконки від творців Tailwind CSS. Outline та solid стилі.</p>
+          <div class="card__footer"><span class="card__link">heroicons.com →</span></div>
+        </div>
+        <div class="card card--orange" onclick="openModal('Iconify','https://iconify.design','iconify.design','Агрегатор','Мета-бібліотека іконок яка об'єднує 150+ колекцій та 200,000+ іконок. Завантажуєш тільки ті іконки які використовуєш. Плагін для Figma, підтримка всіх фреймворків.','• 200,000+ іконок з 150+ колекцій\n• Завантаження тільки потрібних іконок\n• React, Vue, Svelte компоненти\n• Figma плагін\n• Пошук по всіх колекціях')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=iconify.design&sz=32" alt=""/><span class="card__tag">Агрегатор</span></div>
+          <h3 class="card__title">Iconify</h3>
+          <p class="card__desc">150,000+ іконок з усіх популярних бібліотек в одному місці.</p>
+          <div class="card__footer"><span class="card__link">iconify.design →</span></div>
+        </div>
+        <div class="card card--pink" onclick="openModal('Unsplash','https://unsplash.com','unsplash.com','Фото','Безкоштовні high-resolution фотографії для будь-яких проектів. Ліцензія Unsplash дозволяє комерційне використання без вказання авторства. API для програмного отримання фото.','• Мільйони безкоштовних фото\n• Комерційна ліцензія\n• API для отримання фото\n• Пошук по темах та кольорах\n• Колекції та редакторський вибір')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=unsplash.com&sz=32" alt=""/><span class="card__tag">Фото</span></div>
+          <h3 class="card__title">Unsplash</h3>
+          <p class="card__desc">Безкоштовні high-res фотографії для проектів. Безкоштовна ліцензія.</p>
+          <div class="card__footer"><span class="card__link">unsplash.com →</span></div>
+        </div>
+        <div class="card card--blue" onclick="openModal('SVG Repo','https://www.svgrepo.com','svgrepo.com','SVG','500,000+ безкоштовних SVG векторних іконок і зображень. Є колекції для різних тематик — tech, бізнес, природа. Завантаження SVG, PNG або отримання коду.','• 500,000+ SVG іконок та ілюстрацій\n• Завантаження SVG та PNG\n• Редактор кольору онлайн\n• Колекції по тематиках\n• Більшість з відкритою ліцензією')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=svgrepo.com&sz=32" alt=""/><span class="card__tag">SVG</span></div>
+          <h3 class="card__title">SVG Repo</h3>
+          <p class="card__desc">500,000+ безкоштовних SVG векторних іконок і зображень.</p>
+          <div class="card__footer"><span class="card__link">svgrepo.com →</span></div>
+        </div>
+        <div class="card card--purple" onclick="openModal('Fontsource','https://fontsource.org','fontsource.org','Шрифти','Self-hosted шрифти через npm. Замість підключення Google Fonts через CDN — встановлюєш шрифт як npm пакет. Це покращує приватність, швидкість та не залежить від зовнішніх сервісів.','• Встановлення через npm/yarn\n• Немає зовнішніх запитів\n• Краща приватність користувачів\n• 1500+ шрифтів (всі Google Fonts)\n• Variable fonts підтримка')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=fontsource.org&sz=32" alt=""/><span class="card__tag">Шрифти</span></div>
+          <h3 class="card__title">Fontsource</h3>
+          <p class="card__desc">Self-hosted шрифти через npm. Без зовнішніх запитів до Google.</p>
+          <div class="card__footer"><span class="card__link">fontsource.org →</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LEARNING -->
+    <section class="section" id="learn">
+      <div class="section__header">
+        <div class="section__icon">🎓</div>
+        <div><h2 class="section__title">Навчання</h2><p class="section__desc">Курси, відео, статті та практика</p></div>
+      </div>
+      <div class="cards">
+        <div class="card card--green" onclick="openModal('freeCodeCamp','https://www.freecodecamp.org','freecodecamp.org','Безкоштовно','Повноцінна безкоштовна платформа для вивчення веб-розробки. Сертифікаційні курси по HTML/CSS, JavaScript, React, Node.js, Python та ін. Є тисячі задач для практики та реальні проекти.','• Сертифікати по 10+ напрямках\n• 3000+ годин навчального контенту\n• Практичні завдання та проекти\n• Активне ком'юніті на форумі\n• Повністю безкоштовно')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=freecodecamp.org&sz=32" alt=""/><span class="card__tag">Безкоштовно</span></div>
+          <h3 class="card__title">freeCodeCamp</h3>
+          <p class="card__desc">Повний безкоштовний курс веб-розробки з сертифікатами. HTML до React.</p>
+          <div class="card__footer"><span class="card__link">freecodecamp.org →</span></div>
+        </div>
+        <div class="card card--orange" onclick="openModal('The Odin Project','https://www.theodinproject.com','theodinproject.com','Безкоштовно','Безкоштовний повний curriculum для full-stack розробників. Навчання через реальні проекти від початку до кінця. Два шляхи: Full Stack JavaScript або Ruby on Rails.','• Два повних curriculum\n• Навчання через реальні проекти\n• HTML, CSS, JavaScript, React\n• Node.js та бази даних\n• Велике ком'юніті та Discord')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=theodinproject.com&sz=32" alt=""/><span class="card__tag">Безкоштовно</span></div>
+          <h3 class="card__title">The Odin Project</h3>
+          <p class="card__desc">Повноцінний curriculum full-stack розробки. Практика на реальних проектах.</p>
+          <div class="card__footer"><span class="card__link">theodinproject.com →</span></div>
+        </div>
+        <div class="card card--pink" onclick="openModal('Frontend Masters','https://frontendmasters.com','frontendmasters.com','Платно','Преміум платформа з поглибленими курсами від найкращих спеціалістів — Кайл Сімпсон, Скот Мос, Фем Пейн та ін. Курси по JavaScript, React, CSS, Node.js, TypeScript на найвищому рівні.','• Курси від топ-спеціалістів галузі\n• JavaScript: від основ до просунутого\n• CSS, React, TypeScript, Node.js\n• Нові курси щомісяця\n• $39/міс або $390/рік')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=frontendmasters.com&sz=32" alt=""/><span class="card__tag">Платно</span></div>
+          <h3 class="card__title">Frontend Masters</h3>
+          <p class="card__desc">Поглиблені курси від найкращих спеціалістів у frontend-розробці.</p>
+          <div class="card__footer"><span class="card__link">frontendmasters.com →</span></div>
+        </div>
+        <div class="card card--blue" onclick="openModal('Traversy Media','https://www.youtube.com/@TraversyMedia','youtube.com','YouTube','Один з найкращих YouTube-каналів по веб-розробці. Брет Трейверсі публікує практичні туторіали по HTML, CSS, JS, React, Node, Python та ін. 2+ мільйони підписників.','• 1000+ безкоштовних відео\n• Crash courses по технологіях\n• Практичні проекти від нуля\n• Регулярні оновлення\n• 2+ мільйони підписників')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=youtube.com&sz=32" alt=""/><span class="card__tag">YouTube</span></div>
+          <h3 class="card__title">Traversy Media</h3>
+          <p class="card__desc">Один з найкращих YouTube-каналів по веб-розробці. Сотні безкоштовних відео.</p>
+          <div class="card__footer"><span class="card__link">youtube.com →</span></div>
+        </div>
+        <div class="card card--teal" onclick="openModal('Fireship','https://www.youtube.com/@Fireship','youtube.com','YouTube','Короткі (100 seconds) але надзвичайно змістовні відео по сучасних технологіях. Jeff Delaney пояснює складні концепції просто і весело. Також є повні курси на fireship.io.','• 100 Seconds of Code серія\n• Порівняння технологій\n• Огляди нових інструментів\n• Повні курси на fireship.io\n• 3+ мільйони підписників')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=youtube.com&sz=32" alt=""/><span class="card__tag">YouTube</span></div>
+          <h3 class="card__title">Fireship</h3>
+          <p class="card__desc">Короткі та дуже змістовні відео по сучасних технологіях.</p>
+          <div class="card__footer"><span class="card__link">youtube.com →</span></div>
+        </div>
+        <div class="card card--purple" onclick="openModal('Frontend Roadmap','https://roadmap.sh/frontend','roadmap.sh','Roadmap','Інтерактивна карта навчання frontend-розробника. Показує всі технології, їх порядок вивчення та зв'язки між ними. Є roadmaps для backend, DevOps, React, Angular та ін.','• Покрокова карта frontend розробника\n• Рекомендований порядок вивчення\n• Посилання на ресурси по кожній темі\n• Backend, DevOps, React roadmaps\n• Регулярно оновлюється')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=roadmap.sh&sz=32" alt=""/><span class="card__tag">Roadmap</span></div>
+          <h3 class="card__title">Frontend Roadmap</h3>
+          <p class="card__desc">Покрокова карта навчання frontend-розробника. Що і в якому порядку вчити.</p>
+          <div class="card__footer"><span class="card__link">roadmap.sh →</span></div>
+        </div>
+        <div class="card card--pink" onclick="openModal('CSS for JS Devs','https://css-for-js.dev','css-for-js.dev','CSS курс','Платний курс по CSS спеціально для JavaScript розробників від Josh Comeau. Пояснює CSS через mental models а не просто набір правил. Вважається найкращим курсом по CSS.','• Mental models для розуміння CSS\n• Flexbox та Grid глибоко\n• Анімації та трансформації\n• CSS в контексті React\n• Інтерактивні демо та завдання')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=css-for-js.dev&sz=32" alt=""/><span class="card__tag">CSS курс</span></div>
+          <h3 class="card__title">CSS for JS Devs</h3>
+          <p class="card__desc">Платний курс по CSS для JavaScript розробників від Josh Comeau.</p>
+          <div class="card__footer"><span class="card__link">css-for-js.dev →</span></div>
+        </div>
+        <div class="card card--green" onclick="openModal('Patterns.dev','https://www.patterns.dev','patterns.dev','Паттерни','Безкоштовна книга про дизайн-паттерни та патерни рендерингу для сучасних JavaScript застосунків. Охоплює React паттерни, rendering strategies (SSR, SSG, ISR) та performance паттерни.','• Design patterns для JavaScript\n• React паттерни: HOC, Hooks, Render Props\n• Rendering: SSR, SSG, ISR, Streaming\n• Performance патерни\n• Безкоштовно онлайн')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=patterns.dev&sz=32" alt=""/><span class="card__tag">Паттерни</span></div>
+          <h3 class="card__title">Patterns.dev</h3>
+          <p class="card__desc">Дизайн-паттерни та патерни рендерингу для сучасних JavaScript застосунків.</p>
+          <div class="card__footer"><span class="card__link">patterns.dev →</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COLORS -->
+    <section class="section" id="colors">
+      <div class="section__header">
+        <div class="section__icon">🎨</div>
+        <div><h2 class="section__title">Кольори & Дизайн</h2><p class="section__desc">Палітри, градієнти, натхнення</p></div>
+      </div>
+      <div class="cards">
+        <div class="card card--pink" onclick="openModal('Coolors','https://coolors.co','coolors.co','Палітри','Найпопулярніший генератор кольорових палітр. Натисни пробіл — генерує нову палітру. Можна фіксувати кольори, імпортувати зображення, перевіряти контраст та експортувати в різних форматах.','• Генерація палітр пробілом\n• Фіксація окремих кольорів\n• Перевірка контрасту (a11y)\n• Імпорт з зображення\n• Експорт в CSS, SVG, PDF')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=coolors.co&sz=32" alt=""/><span class="card__tag">Палітри</span></div>
+          <h3 class="card__title">Coolors</h3>
+          <p class="card__desc">Генератор кольорових палітр. Натисни пробіл — отримай палітру.</p>
+          <div class="card__footer"><span class="card__link">coolors.co →</span></div>
+        </div>
+        <div class="card card--orange" onclick="openModal('Color Hunt','https://colorhunt.co','colorhunt.co','Палітри','Колекція куровуваних кольорових палітр від дизайнерів з усього світу. Можна фільтрувати по тегах (pastel, dark, vintage і ін.) та копіювати HEX коди одним кліком.','• Тисячі палітр від дизайнерів\n• Фільтр по стилях та тегах\n• Копіювання HEX одним кліком\n• Trending та нові палітри\n• Збереження улюблених')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=colorhunt.co&sz=32" alt=""/><span class="card__tag">Палітри</span></div>
+          <h3 class="card__title">Color Hunt</h3>
+          <p class="card__desc">Куровані кольорові палітри від дизайнерів з усього світу.</p>
+          <div class="card__footer"><span class="card__link">colorhunt.co →</span></div>
+        </div>
+        <div class="card card--purple" onclick="openModal('UI Gradients','https://uigradients.com','uigradients.com','Градієнти','Колекція красивих двоколірних CSS градієнтів з готовим кодом. Вибираєш градієнт — одразу отримуєш CSS код для background-image. Простий та зручний інтерфейс.','• Сотні красивих градієнтів\n• Готовий CSS код\n• Перегляд на весь екран\n• Пошук по назві\n• Завантаження як зображення')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=uigradients.com&sz=32" alt=""/><span class="card__tag">Градієнти</span></div>
+          <h3 class="card__title">UI Gradients</h3>
+          <p class="card__desc">Колекція красивих CSS градієнтів з готовим кодом.</p>
+          <div class="card__footer"><span class="card__link">uigradients.com →</span></div>
+        </div>
+        <div class="card card--teal" onclick="openModal('Happy Hues','https://www.happyhues.co','happyhues.co','Палітри','Унікальний ресурс — кольорові палітри показуються у контексті реальних макетів сторінок. Відразу бачиш як ця палітра виглядатиме на твоєму сайті, а не просто набір кольорів.','• Палітри в контексті реальних макетів\n• Показує фон, текст, акценти\n• 20+ ретельно підібраних палітр\n• Пояснення як використовувати кольори\n• Натхнення для кольорових схем')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=happyhues.co&sz=32" alt=""/><span class="card__tag">Палітри</span></div>
+          <h3 class="card__title">Happy Hues</h3>
+          <p class="card__desc">Кольорові палітри з реальними прикладами застосування на сторінках.</p>
+          <div class="card__footer"><span class="card__link">happyhues.co →</span></div>
+        </div>
+        <div class="card card--pink" onclick="openModal('Dribbble','https://dribbble.com','dribbble.com','Натхнення','Найбільша платформа для дизайнерів. Мільйони UI/UX робіт — мобільні застосунки, веб-сайти, ілюстрації, анімації. Незамінне джерело натхнення для будь-якого дизайну.','• Мільйони UI/UX дизайнів\n• Мобільні та веб інтерфейси\n• Пошук по стилях та кольорах\n• Hiring designers\n• Натхнення для кольорових рішень')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=dribbble.com&sz=32" alt=""/><span class="card__tag">Натхнення</span></div>
+          <h3 class="card__title">Dribbble</h3>
+          <p class="card__desc">Платформа для дизайнерів. Незліченне натхнення для UI/UX.</p>
+          <div class="card__footer"><span class="card__link">dribbble.com →</span></div>
+        </div>
+        <div class="card card--blue" onclick="openModal('Awwwards','https://www.awwwards.com','awwwards.com','Натхнення','Платформа яка нагороджує найкращі веб-сайти у світі за дизайн, юзабіліті та креативність. Тут найкращий топ-дизайн — відмінне натхнення для амбітних проектів.','• Найкращі сайти у світі\n• Щоденні нагороди (SOTD)\n• Категорії: Agency, E-commerce, Portfolio\n• Натхнення для анімацій та ефектів\n• Трендові техніки та підходи')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=awwwards.com&sz=32" alt=""/><span class="card__tag">Натхнення</span></div>
+          <h3 class="card__title">Awwwards</h3>
+          <p class="card__desc">Нагороди та галерея найкращих веб-сайтів у світі. Топ дизайн.</p>
+          <div class="card__footer"><span class="card__link">awwwards.com →</span></div>
+        </div>
+        <div class="card card--green" onclick="openModal('CSS Gradient','https://cssgradient.io','cssgradient.io','Градієнти','Візуальний редактор CSS градієнтів онлайн. Вибираєш кольори, напрямок, тип (linear, radial, conic) — і одразу отримуєш готовий CSS код. Також є колекція готових градієнтів.','• Візуальний редактор градієнтів\n• Linear, radial, conic градієнти\n• Копіювання CSS коду\n• Колекція готових градієнтів\n• Підтримка прозорості та складних стопів')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=cssgradient.io&sz=32" alt=""/><span class="card__tag">Градієнти</span></div>
+          <h3 class="card__title">CSS Gradient</h3>
+          <p class="card__desc">Візуальний редактор CSS градієнтів з генерацією коду.</p>
+          <div class="card__footer"><span class="card__link">cssgradient.io →</span></div>
+        </div>
+        <div class="card card--purple" onclick="openModal('Shader Gradient','https://www.shadergradient.co','shadergradient.co','3D','Генератор анімованих 3D градієнтних фонів для сайтів. Використовує WebGL шейдери для рідких плавних градієнтів. Є React компонент та Figma плагін.','• Анімовані 3D градієнти\n• WebGL шейдери\n• React компонент\n• Figma плагін\n• Кастомізація кольорів та анімації')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=shadergradient.co&sz=32" alt=""/><span class="card__tag">3D</span></div>
+          <h3 class="card__title">Shader Gradient</h3>
+          <p class="card__desc">Генератор анімованих 3D градієнтних фонів для сайтів.</p>
+          <div class="card__footer"><span class="card__link">shadergradient.co →</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PERFORMANCE -->
+    <section class="section" id="perf">
+      <div class="section__header">
+        <div class="section__icon">⚡</div>
+        <div><h2 class="section__title">Перформанс & Тестування</h2><p class="section__desc">Аналіз швидкості, доступності та тестування</p></div>
+      </div>
+      <div class="cards">
+        <div class="card card--green" onclick="openModal('PageSpeed Insights','https://pagespeed.web.dev','pagespeed.web.dev','Аналіз','Безкоштовний інструмент від Google для аналізу швидкості веб-сайтів. Вимірює Core Web Vitals (LCP, INP, CLS), дає конкретні рекомендації по оптимізації для мобільних та десктоп пристроїв.','• Core Web Vitals: LCP, INP, CLS\n• Аналіз мобільної та десктоп версії\n• Конкретні рекомендації по оптимізації\n• Реальні дані (CrUX) та лабораторні\n• Безкоштовно від Google')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=pagespeed.web.dev&sz=32" alt=""/><span class="card__tag">Аналіз</span></div>
+          <h3 class="card__title">PageSpeed Insights</h3>
+          <p class="card__desc">Аналіз швидкості сайту від Google з рекомендаціями по оптимізації.</p>
+          <div class="card__footer"><span class="card__link">pagespeed.web.dev →</span></div>
+        </div>
+        <div class="card card--orange" onclick="openModal('GTmetrix','https://gtmetrix.com','gtmetrix.com','Аналіз','Детальний аналіз перформансу з waterfall графіком запитів, Core Web Vitals, структурою завантаження. Можна тестувати з різних локацій та браузерів. Є відеозапис завантаження.','• Waterfall графік запитів\n• Core Web Vitals та Lighthouse score\n• Тест з різних географічних локацій\n• Відеозапис процесу завантаження\n• Порівняння результатів у часі')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=gtmetrix.com&sz=32" alt=""/><span class="card__tag">Аналіз</span></div>
+          <h3 class="card__title">GTmetrix</h3>
+          <p class="card__desc">Детальний аналіз перформансу з waterfall графіком та Core Web Vitals.</p>
+          <div class="card__footer"><span class="card__link">gtmetrix.com →</span></div>
+        </div>
+        <div class="card card--blue" onclick="openModal('WAVE','https://wave.webaim.org','wave.webaim.org','Доступність','Безкоштовний інструмент для перевірки веб-доступності (accessibility). Показує помилки, попередження та структурні елементи прямо на сторінці. Також є розширення для браузера.','• Перевірка WCAG 2.1 стандартів\n• Візуальна підсвітка помилок\n• Аналіз контрасту кольорів\n• Розширення для Chrome та Firefox\n• Безкоштовний онлайн сервіс')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=wave.webaim.org&sz=32" alt=""/><span class="card__tag">Доступність</span></div>
+          <h3 class="card__title">WAVE</h3>
+          <p class="card__desc">Перевірка веб-доступності (accessibility) сторінок.</p>
+          <div class="card__footer"><span class="card__link">wave.webaim.org →</span></div>
+        </div>
+        <div class="card card--purple" onclick="openModal('Vitest','https://vitest.dev','vitest.dev','Тести','Швидкий unit-тест фреймворк побудований на основі Vite. Сумісний з Jest API — легко мігрувати. Підтримує TypeScript з коробки, ESM, snapshot тести та coverage.','• Jest-сумісний API\n• Нативна підтримка TypeScript\n• Snapshot тести\n• Coverage reports\n• UI для перегляду тестів')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=vitest.dev&sz=32" alt=""/><span class="card__tag">Тести</span></div>
+          <h3 class="card__title">Vitest</h3>
+          <p class="card__desc">Швидкий unit-тест фреймворк на базі Vite. Сумісний з Jest.</p>
+          <div class="card__footer"><span class="card__link">vitest.dev →</span></div>
+        </div>
+        <div class="card card--teal" onclick="openModal('Playwright','https://playwright.dev','playwright.dev','E2E','End-to-end тестування браузерів від Microsoft. Підтримує Chromium, Firefox та Safari в одному API. Автоматичне очікування елементів, trace viewer, codegen для запису тестів.','• Chromium, Firefox, Safari підтримка\n• Автоматичне очікування елементів\n• Trace Viewer для дебагінгу\n• Codegen — запис тестів кліками\n• Паралельне виконання тестів')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=playwright.dev&sz=32" alt=""/><span class="card__tag">E2E</span></div>
+          <h3 class="card__title">Playwright</h3>
+          <p class="card__desc">End-to-end тестування браузерів від Microsoft. Підтримує Chromium, Firefox, Safari.</p>
+          <div class="card__footer"><span class="card__link">playwright.dev →</span></div>
+        </div>
+        <div class="card card--pink" onclick="openModal('Bundlephobia','https://bundlephobia.com','bundlephobia.com','Аналіз','Перевір розмір npm пакету до його встановлення. Показує мінімізований розмір, gzip розмір, час завантаження та альтернативні менші пакети. Незамінно для оптимізації bundle.','• Розмір пакету: min та gzip\n• Час завантаження на різних з'єднаннях\n• Граф залежностей\n• Порівняння з альтернативами\n• History версій та їх розмірів')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=bundlephobia.com&sz=32" alt=""/><span class="card__tag">Аналіз</span></div>
+          <h3 class="card__title">Bundlephobia</h3>
+          <p class="card__desc">Перевір розмір npm пакету до його встановлення. Оптимізуй bundle.</p>
+          <div class="card__footer"><span class="card__link">bundlephobia.com →</span></div>
+        </div>
+        <div class="card card--green" onclick="openModal('WebPageTest','https://www.webpagetest.org','webpagetest.org','Аналіз','Найдетальніший інструмент тестування швидкості сайтів. Тест з реальних браузерів у різних локаціях, детальний waterfall, Core Web Vitals, filmstrip завантаження.','• Тест з реальних браузерів\n• 40+ тестових локацій по світу\n• Filmstrip завантаження\n• Детальний waterfall аналіз\n• Порівняння до/після оптимізації')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=webpagetest.org&sz=32" alt=""/><span class="card__tag">Аналіз</span></div>
+          <h3 class="card__title">WebPageTest</h3>
+          <p class="card__desc">Детальний тест швидкості сайту з реальних локацій та браузерів.</p>
+          <div class="card__footer"><span class="card__link">webpagetest.org →</span></div>
+        </div>
+        <div class="card card--blue" onclick="openModal('Responsively','https://responsively.app','responsively.app','Responsive','Браузер для розробників який показує сайт одночасно на багатьох екранах. Всі пристрої синхронізовані — скролиш на одному, скролять всі. Незамінно для адаптивної верстки.','• Одночасний перегляд на 5+ екранах\n• Синхронний скрол та кліки\n• Кастомні розміри екранів\n• Скриншот всіх пристроїв разом\n• Безкоштовний open-source')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=responsively.app&sz=32" alt=""/><span class="card__tag">Responsive</span></div>
+          <h3 class="card__title">Responsively</h3>
+          <p class="card__desc">Браузер для розробників — переглядай сайт одночасно на багатьох екранах.</p>
+          <div class="card__footer"><span class="card__link">responsively.app →</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DEPLOY -->
+    <section class="section" id="deploy">
+      <div class="section__header">
+        <div class="section__icon">🚀</div>
+        <div><h2 class="section__title">Деплой & Хостинг</h2><p class="section__desc">Платформи для публікації та хостингу сайтів</p></div>
+      </div>
+      <div class="cards">
+        <div class="card card--blue" onclick="openModal('Vercel','https://vercel.com','vercel.com','Безкоштовно','Найкращий хостинг для frontend проектів. Автоматичний деплой при push в GitHub, edge CDN, serverless functions, preview deployments для кожного PR. Безкоштовний план для особистих проектів.','• Автодеплой з GitHub/GitLab\n• Edge CDN у 100+ локаціях\n• Preview deployments для PR\n• Serverless Functions\n• Безкоштовно для особистих проектів')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=vercel.com&sz=32" alt=""/><span class="card__tag">Безкоштовно</span></div>
+          <h3 class="card__title">Vercel</h3>
+          <p class="card__desc">Найкращий хостинг для frontend. Автодеплой з GitHub, edge CDN, serverless.</p>
+          <div class="card__footer"><span class="card__link">vercel.com →</span></div>
+        </div>
+        <div class="card card--teal" onclick="openModal('Netlify','https://www.netlify.com','netlify.com','Безкоштовно','Платформа для деплою статичних сайтів та JAMstack додатків. Вбудований CI/CD, preview deployments, Netlify Functions, Forms та Identity. Безкоштовний план з щедрими лімітами.','• Автодеплой з Git\n• Netlify Functions (serverless)\n• Forms без бекенду\n• Split testing\n• 100GB bandwidth безкоштовно')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=netlify.com&sz=32" alt=""/><span class="card__tag">Безкоштовно</span></div>
+          <h3 class="card__title">Netlify</h3>
+          <p class="card__desc">Платформа для деплою статичних сайтів та JAMstack. CI/CD вбудований.</p>
+          <div class="card__footer"><span class="card__link">netlify.com →</span></div>
+        </div>
+        <div class="card card--purple" onclick="openModal('GitHub Pages','https://pages.github.com','pages.github.com','Безкоштовно','Безкоштовний хостинг прямо з GitHub репозиторія. Ідеально для портфоліо, документації та простих сайтів. Підтримує кастомні домени та HTTPS. Деплой при push в main гілку.','• Безкоштовно для публічних репо\n• Кастомний домен\n• HTTPS з Let\'s Encrypt\n• Jekyll підтримка\n• Автодеплой при push')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=pages.github.com&sz=32" alt=""/><span class="card__tag">Безкоштовно</span></div>
+          <h3 class="card__title">GitHub Pages</h3>
+          <p class="card__desc">Безкоштовний хостинг прямо з GitHub репозиторія. Ідеально для портфоліо.</p>
+          <div class="card__footer"><span class="card__link">pages.github.com →</span></div>
+        </div>
+        <div class="card card--orange" onclick="openModal('Firebase Hosting','https://firebase.google.com','firebase.google.com','Google','Хостинг від Google з швидкою глобальною CDN, автоматичним SSL та інтеграцією з Firebase сервісами — Auth, Firestore, Functions. Безкоштовний план з 10GB хостингу.','• Глобальна CDN від Google\n• Автоматичний SSL\n• Інтеграція з Firebase Auth, DB\n• Hosting channels для прев'ю\n• 10GB хостингу безкоштовно')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=firebase.google.com&sz=32" alt=""/><span class="card__tag">Google</span></div>
+          <h3 class="card__title">Firebase Hosting</h3>
+          <p class="card__desc">Хостинг від Google з швидкою CDN, SSL та інтеграцією з Firebase сервісами.</p>
+          <div class="card__footer"><span class="card__link">firebase.google.com →</span></div>
+        </div>
+        <div class="card card--orange" onclick="openModal('Cloudflare Pages','https://pages.cloudflare.com','cloudflare.com','CDN','Деплой на глобальну edge-мережу Cloudflare — найбільшу у світі. Необмежені bandwidth, preview deployments, Workers для serverless. Часто швидший за Vercel завдяки edge-архітектурі.','• Edge мережа у 300+ містах\n• Необмежений bandwidth\n• Cloudflare Workers (serverless)\n• Preview deployments\n• Захист від DDoS з коробки')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=cloudflare.com&sz=32" alt=""/><span class="card__tag">CDN</span></div>
+          <h3 class="card__title">Cloudflare Pages</h3>
+          <p class="card__desc">Деплой на глобальний edge-мережі Cloudflare. Дуже швидко.</p>
+          <div class="card__footer"><span class="card__link">cloudflare.com →</span></div>
+        </div>
+        <div class="card card--pink" onclick="openModal('Railway','https://railway.app','railway.app','Full-stack','Простий деплой будь-яких застосунків — frontend, backend, бази даних. Автодеплой з GitHub, вбудовані PostgreSQL, MySQL, Redis. Платиш лише за використані ресурси.','• Деплой будь-якого стеку\n• PostgreSQL, MySQL, Redis вбудовані\n• Оплата за використання\n• Автодеплой з GitHub\n• Просте налаштування без DevOps')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=railway.app&sz=32" alt=""/><span class="card__tag">Full-stack</span></div>
+          <h3 class="card__title">Railway</h3>
+          <p class="card__desc">Простий деплой будь-яких застосунків. Databases, backends, frontends.</p>
+          <div class="card__footer"><span class="card__link">railway.app →</span></div>
+        </div>
+        <div class="card card--green" onclick="openModal('Supabase','https://supabase.com','supabase.com','Backend','Open-source альтернатива Firebase побудована на PostgreSQL. Містить Auth, Realtime database, Storage, Edge Functions. Безкоштовний план для 2 проектів. Повний SQL доступ.','• PostgreSQL з повним SQL доступом\n• Authentication (Email, OAuth)\n• Realtime subscriptions\n• Storage для файлів\n• Edge Functions (Deno)')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=supabase.com&sz=32" alt=""/><span class="card__tag">Backend</span></div>
+          <h3 class="card__title">Supabase</h3>
+          <p class="card__desc">Open-source альтернатива Firebase. PostgreSQL + Auth + Storage + Realtime.</p>
+          <div class="card__footer"><span class="card__link">supabase.com →</span></div>
+        </div>
+        <div class="card card--teal" onclick="openModal('Render','https://www.render.com','render.com','Full-stack','Уніфікована хмарна платформа для деплою веб-сервісів, баз даних та cron jobs. Автодеплой з Git, безкоштовний план для статичних сайтів, простіший за AWS/GCP.','• Статичні сайти безкоштовно\n• Web services, cron jobs, workers\n• PostgreSQL та Redis\n• Автодеплой з GitHub/GitLab\n• Простіший за AWS/GCP/Azure')">
+          <div class="card__top"><img class="card__favicon" src="https://www.google.com/s2/favicons?domain=render.com&sz=32" alt=""/><span class="card__tag">Full-stack</span></div>
+          <h3 class="card__title">Render</h3>
+          <p class="card__desc">Уніфікована хмарна платформа для деплою веб-сервісів та баз даних.</p>
+          <div class="card__footer"><span class="card__link">render.com →</span></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div class="no-results" id="noResults" style="display:none">
+    <div class="no-results__icon">🔍</div>
+    <h3>Нічого не знайдено</h3>
+    <p>Спробуй інший запит</p>
+  </div>
+
+  <!-- MODAL -->
+  <div class="modal-overlay" id="modalOverlay" onclick="closeModal()">
+    <div class="modal" id="modal" onclick="event.stopPropagation()">
+      <button class="modal__close" onclick="closeModal()">✕</button>
+      <div class="modal__header">
+        <img class="modal__favicon" id="modalFavicon" src="" alt="" />
+        <div>
+          <div class="modal__tag" id="modalTag"></div>
+          <h2 class="modal__title" id="modalTitle"></h2>
+          <div class="modal__domain" id="modalDomain"></div>
+        </div>
+      </div>
+      <p class="modal__desc" id="modalDesc"></p>
+      <div class="modal__features" id="modalFeatures"></div>
+      <div class="modal__actions">
+        <a class="modal__btn modal__btn--primary" id="modalLink" href="#" target="_blank">
+          🌐 Відкрити сайт
+        </a>
+        <button class="modal__btn modal__btn--secondary" onclick="openModalChat()" id="modalChatBtn">
+          🤖 Запитати AI
+        </button>
+        <button class="modal__btn modal__btn--secondary" onclick="closeModal()">✕</button>
+      </div>
+
+      <!-- MODAL AI CHAT -->
+      <div class="modal-ai-chat" id="modalAiChat" style="display:none">
+        <div class="modal-ai-chat__header">
+          <span>🤖 AI про цей сайт</span>
+          <button onclick="closeModalChat()">✕</button>
+        </div>
+        <div class="modal-ai-chat__messages" id="modalAiMessages"></div>
+        <div class="modal-ai-chat__quick" id="modalQuickBtns"></div>
+        <div class="modal-ai-chat__input">
+          <input type="text" id="modalAiInput" placeholder="Запитай про цей сайт..." />
+          <button onclick="sendModalAiMessage()">➤</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__top">
+        <div class="footer__brand">
+          <div class="logo">
+            <span class="logo__icon">&#60;/&#62;</span>
+            <span class="logo__text">Frontend <span class="gradient-text">Helper</span></span>
+          </div>
+          <p class="footer__tagline">Всі frontend ресурси в одному місці</p>
+        </div>
+        <div class="footer__links">
+          <div class="footer__col">
+            <h4 class="footer__col-title">Навігація</h4>
+            <a href="#docs" class="footer__link">Документація</a>
+            <a href="#tools" class="footer__link">Інструменти</a>
+            <a href="#ui" class="footer__link">UI бібліотеки</a>
+            <a href="#learn" class="footer__link">Навчання</a>
+          </div>
+          <div class="footer__col">
+            <h4 class="footer__col-title">Акаунт</h4>
+            <a href="profile.html" class="footer__link">Профіль</a>
+            <a href="auth.html" class="footer__link">Вхід / Реєстрація</a>
+          </div>
+          <div class="footer__col">
+            <h4 class="footer__col-title">Підтримка</h4>
+            <a href="mailto:nikita99didorenko@gmail.com" class="footer__link">📧 Email підтримки</a>
+            <span class="footer__link">📞 +380 99 123 45 67</span>
+            <span class="footer__link footer__link--hint">Пн-Пт: 9:00 — 18:00</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer__contact-form">
+        <h3 class="footer__contact-title">✉️ Написати нам</h3>
+        <form class="footer__form" onsubmit="sendSupportEmail(event)">
+          <div class="footer__form-row">
+            <input type="text" id="supportName" class="footer__input" placeholder="Ваше ім'я" required />
+            <input type="email" id="supportEmail" class="footer__input" placeholder="Ваш email" required />
+          </div>
+          <textarea id="supportMessage" class="footer__textarea" placeholder="Ваше повідомлення..." rows="3" required></textarea>
+          <button type="submit" class="footer__submit" id="supportBtn">
+            <span id="supportBtnText">Надіслати повідомлення</span>
+          </button>
+          <div class="footer__form-status" id="supportStatus" style="display:none"></div>
+        </form>
+      </div>
+
+      <div class="footer__bottom">
+        <p class="footer__copy">© 2026 Frontend Helper. Зроблено з ❤️ для frontend розробників</p>
+        <a href="mailto:nikita99didorenko@gmail.com" class="footer__email-link">nikita99didorenko@gmail.com</a>
+      </div>
+    </div>
+  </footer>
+
+  <button class="scroll-top" id="scrollTop" title="Нагору">↑</button>
+
+  <script type="module" src="main.js"></script>
+  <script type="module" src="chat.js"></script>
+</body>
+</html>
