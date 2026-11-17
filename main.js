@@ -388,28 +388,44 @@ async function callModalAI(text) {
   msgs.scrollTop = msgs.scrollHeight;
 
   const site = window._currentModalSite || {};
+  const MODAL_MODELS = [
+    "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "nvidia/nemotron-3-super-120b-a12b:free",
+    "deepseek/deepseek-r1-0528:free",
+    "mistralai/mistral-7b-instruct:free",
+    "qwen/qwen-2.5-72b-instruct:free"
+  ];
+
+  const sysPrompt = `Ти AI-асистент що відповідає на питання про інструмент "${site.title}" (${site.domain}) для frontend розробників. Опис: ${site.desc}. Відповідай коротко та по суті, українською мовою.`;
 
   try {
     const OPENROUTER_KEY = "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";
-    const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${OPENROUTER_KEY}`,
-        'HTTP-Referer': window.location.origin,
-        'X-Title': 'Frontend Helper'
-      },
-      body: JSON.stringify({
-        model: "meta-llama/llama-3.3-8b-instruct:free",
-        messages: [
-          { role: 'system', content: `Ти AI-асистент що відповідає на питання про інструмент "${site.title}" (${site.domain}) для frontend розробників. Опис: ${site.desc}. Відповідай коротко та по суті, українською мовою.` },
-          { role: 'user', content: text }
-        ],
-        max_tokens: 400
-      })
-    });
-    const data = await res.json();
-    typing.textContent = data?.choices?.[0]?.message?.content || 'Не вдалося отримати відповідь.';
+    let aiText = null;
+    for (const model of MODAL_MODELS) {
+      const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${OPENROUTER_KEY}`,
+          'HTTP-Referer': window.location.origin,
+          'X-Title': 'Frontend Helper'
+        },
+        body: JSON.stringify({
+          model,
+          messages: [
+            { role: 'system', content: sysPrompt },
+            { role: 'user', content: text }
+          ],
+          max_tokens: 400
+        })
+      });
+      const data = await res.json();
+      if (res.ok && data?.choices?.[0]?.message?.content) {
+        aiText = data.choices[0].message.content;
+        break;
+      }
+    }
+    typing.textContent = aiText || 'Не вдалося отримати відповідь.';
   } catch {
     typing.textContent = '⚠️ Помилка з\'єднання.';
   }

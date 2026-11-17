@@ -115,7 +115,43 @@ window.savePrompt = async function() {
 // =============================================
 
 const OPENROUTER_KEY = "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";
-const GEMINI_URL = "https://openrouter.ai/api/v1/chat/completions";
+const GEMINI_URL     = "https://openrouter.ai/api/v1/chat/completions";
+const ADMIN_MODELS   = [
+  "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "nvidia/nemotron-3-super-120b-a12b:free",
+  "deepseek/deepseek-r1-0528:free",
+  "mistralai/mistral-7b-instruct:free",
+  "qwen/qwen-2.5-72b-instruct:free"
+];
+
+async function callAI(systemPrompt, userText) {
+  for (const model of ADMIN_MODELS) {
+    try {
+      const res = await fetch(GEMINI_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${OPENROUTER_KEY}`,
+          'HTTP-Referer': window.location.origin,
+          'X-Title': 'Frontend Helper'
+        },
+        body: JSON.stringify({
+          model,
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user',   content: userText }
+          ]
+        })
+      });
+      const data = await res.json();
+      if (res.ok && data?.choices?.[0]?.message?.content) {
+        return data.choices[0].message.content;
+      }
+      console.warn(`Admin model ${model} failed, trying next...`);
+    } catch { console.warn(`Admin model ${model} error`); }
+  }
+  throw new Error('Всі моделі недоступні. Спробуй пізніше.');
+}
 
 window.testAI = async function() {
   const input    = document.getElementById('aiTestInput');
@@ -126,39 +162,12 @@ window.testAI = async function() {
 
   result.textContent = '⏳ Думаю...';
 
-  const body = {
-    model: "meta-llama/llama-3.3-8b-instruct:free",
-    messages: [
-      { role: "system", content: textarea.value },
-      { role: "user",   content: text }
-    ]
-  };
-
   try {
-    const res  = await fetch(GEMINI_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${OPENROUTER_KEY}`,
-        'HTTP-Referer': window.location.origin,
-        'X-Title': 'Frontend Helper'
-      },
-      body: JSON.stringify(body)
-    });
-    const data = await res.json();
-    console.log('AI response:', data);
-    if (!res.ok) {
-      result.textContent = `❌ Помилка ${res.status}: ${data?.error?.message || JSON.stringify(data)}`;
-      return;
-    }
-    const answer = data?.choices?.[0]?.message?.content || 'Немає відповіді';
+    const answer = await callAI(textarea.value, text);
     result.textContent = answer;
-
-    // Зберегти в історію
     await saveHistory(text, answer, 'admin-test');
     loadHistory();
   } catch (err) {
-    console.error('Fetch error:', err);
     result.textContent = '❌ ' + err.message;
   }
 };

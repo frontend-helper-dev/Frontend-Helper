@@ -16,7 +16,48 @@ const firebaseConfig = {
 };
 
 const OPENROUTER_KEY = "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";
-const GEMINI_URL = "https://openrouter.ai/api/v1/chat/completions";
+const GEMINI_URL     = "https://openrouter.ai/api/v1/chat/completions";
+
+// Список безкоштовних моделей — автоматичний fallback
+const FREE_MODELS = [
+  "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "nvidia/nemotron-3-super-120b-a12b:free",
+  "deepseek/deepseek-r1-0528:free",
+  "mistralai/mistral-7b-instruct:free",
+  "qwen/qwen-2.5-72b-instruct:free",
+  "google/gemma-3-27b-it:free"
+];
+let _currentModelIdx = 0;
+
+async function callOpenRouter(messages) {
+  for (let i = _currentModelIdx; i < FREE_MODELS.length; i++) {
+    const model = FREE_MODELS[i];
+    try {
+      const res = await fetch(GEMINI_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${OPENROUTER_KEY}`,
+          'HTTP-Referer': window.location.origin,
+          'X-Title': 'Frontend Helper'
+        },
+        body: JSON.stringify({ model, messages, max_tokens: 800, temperature: 0.7 })
+      });
+      const data = await res.json();
+      if (res.ok && data?.choices?.[0]?.message?.content) {
+        _currentModelIdx = i; // запам'ятовуємо робочу модель
+        return data.choices[0].message.content;
+      }
+      // Якщо модель недоступна — пробуємо наступну
+      console.warn(`Model ${model} failed, trying next...`);
+    } catch {
+      console.warn(`Model ${model} error, trying next...`);
+    }
+  }
+  // Всі моделі вичерпані — скидаємо на початок
+  _currentModelIdx = 0;
+  throw new Error('Всі безкоштовні моделі недоступні. Спробуй пізніше.');
+}
 
 // Init Firebase (avoid duplicate)
 const app  = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
@@ -284,42 +325,21 @@ async function getAIResponse(userText) {
   messages.push({ role: 'user', content: userText });
 
   const body = {
-    model: "meta-llama/llama-3.3-8b-instruct:free",
+    model: "nvidia/nemotron-3-ultra-550b-a55b:free",
     messages,
     temperature: 0.7,
     max_tokens: 800
   };
 
   try {
-    const res = await fetch(GEMINI_URL, {
-      method:  'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${OPENROUTER_KEY}`,
-        'HTTP-Referer': window.location.origin,
-        'X-Title': 'Frontend Helper'
-      },
-      body: JSON.stringify(body)
-    });
-
-    if (!res.ok) {
-      const err = await res.json();
-      throw new Error(err?.error?.message || 'API error');
-    }
-
-    const data   = await res.json();
-    const aiText = data?.choices?.[0]?.message?.content || 'Вибач, не вдалося отримати відповідь.';
-
+    const aiText = await callOpenRouter(messages);
     removeTyping();
     addMessage('ai', aiText);
     chatHistory.push({ role: 'ai', text: aiText });
 
   } catch (err) {
     removeTyping();
-    const errMsg = err.message.includes('API_KEY')
-      ? '⚠️ Помилка API ключа. Перевір налаштування.'
-      : '⚠️ Помилка з\'єднання. Спробуй ще раз.';
-    addMessage('ai', errMsg);
+    addMessage('ai', '⚠️ ' + err.message);
   } finally {
     isTyping = false;
     document.getElementById('chatSendBtn').disabled = false;

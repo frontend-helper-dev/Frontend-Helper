@@ -24,8 +24,8 @@ const firebaseConfig = {
 };
 
 // EmailJS config
-const EMAILJS_SERVICE  = 'service_nqfhcob';
-const EMAILJS_TEMPLATE = 'template_l3j386u';
+const EMAILJS_SERVICE  = 'service_j3db08m';
+const EMAILJS_TEMPLATE = 'template_at3upzn';
 const EMAILJS_KEY      = 'vjJsRtMqVejxklJfD';
 
 const app  = initializeApp(firebaseConfig);
@@ -321,29 +321,14 @@ window.handleRegister = async function(e) {
   setLoading('registerBtn', true);
 
   try {
-    // Зберігаємо дані для OTP
-    _otpEmail = email;
-    _otpPass  = pass1;
-    _otpName  = name;
-
-    // Генеруємо та надсилаємо OTP
-    await sendOTPEmail(email, name);
-
+    const result = await createUserWithEmailAndPassword(auth, email, pass1);
+    await updateProfile(result.user, { displayName: name });
     isProcessing = false;
-    setLoading('registerBtn', false);
-
-    // Показуємо OTP екран
-    document.getElementById('authCard').style.display     = 'none';
-    document.getElementById('verifyNotice').style.display = '';
-    document.getElementById('verifyEmail').textContent    = email;
-
-    // Ініціалізуємо OTP inputs
-    initOTPInputs();
-
+    window.location.href = 'index.html';
   } catch (err) {
     isProcessing = false;
     setLoading('registerBtn', false);
-    showAlert('Помилка надсилання коду: ' + err.message);
+    showAlert(firebaseError(err.code));
   }
 };
 
@@ -356,17 +341,33 @@ async function sendOTPEmail(email, name) {
   _otpCode    = String(Math.floor(100000 + Math.random() * 900000));
   _otpExpires = Date.now() + 10 * 60 * 1000; // 10 хвилин
 
-  // Ініціалізуємо EmailJS
-  if (window.emailjs) {
+  // Чекаємо поки EmailJS завантажиться
+  let attempts = 0;
+  while (!window.emailjs && attempts < 20) {
+    await new Promise(r => setTimeout(r, 200));
+    attempts++;
+  }
+
+  if (!window.emailjs) {
+    throw new Error('EmailJS не завантажено. Перезавантаж сторінку.');
+  }
+
+  try {
     emailjs.init(EMAILJS_KEY);
-    await emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, {
+    const result = await emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, {
+      to_email: email,
       email:    email,
       passcode: _otpCode,
+      otp:      _otpCode,
+      code:     _otpCode,
       time:     new Date().toLocaleTimeString('uk'),
-      to_name:  name || 'користувачу'
+      to_name:  name || 'Користувачу',
+      from_name: 'Frontend Helper'
     });
-  } else {
-    throw new Error('EmailJS не завантажено');
+    console.log('EmailJS result:', result);
+  } catch (err) {
+    console.error('EmailJS error:', err);
+    throw new Error('Не вдалося надіслати код: ' + (err?.text || err?.message || JSON.stringify(err)));
   }
 }
 
