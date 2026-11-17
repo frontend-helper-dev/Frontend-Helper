@@ -390,7 +390,7 @@ async function callModalAI(text) {
   const site = window._currentModalSite || {};
 
   try {
-    const OPENROUTER_KEY = "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";
+    const OPENROUTER_KEY = "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";
     const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: 'POST',
       headers: {

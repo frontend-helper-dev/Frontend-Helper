@@ -15,7 +15,7 @@ const firebaseConfig = {
   appId: "1:694794448757:web:520bdbd6ee52e804c0ed3c"
 };
 
-const OPENROUTER_KEY = "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";
+const OPENROUTER_KEY = "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";
 const GEMINI_URL = "https://openrouter.ai/api/v1/chat/completions";
 
 // Init Firebase (avoid duplicate)
